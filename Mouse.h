@@ -85,6 +85,6 @@ private:
 	std::queue<Event> _eventBuffer;
 
 	bool _leftIsPressed, _rightIsPressed, _isInWindow;
-	int _x, _y, _wheelDeltaCarry;
+	int _x, _y, _wheelDeltaCarry = 0;
 };
 
