@@ -5,6 +5,7 @@
 #include "resource.h"
 #include "Keyboard.h"
 #include "Mouse.h"
+#include <optional>
 
 class Window
 {
@@ -27,6 +28,7 @@ class Window
 	static LRESULT CALLBACK HandleMessageSetup(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	static LRESULT CALLBACK HandleMessageThunk(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	
 
 public:
 
@@ -52,6 +54,7 @@ public:
 	Window operator=(const Window&) noexcept = delete;
 
 	void set_title(const char* title) const noexcept;
+	std::optional<int> ProcessMessages();
 
 	Keyboard keyboard;
 	Mouse mouse;

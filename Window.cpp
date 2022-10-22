@@ -137,6 +137,22 @@ LRESULT CALLBACK Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPar
 	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
+std::optional<int> Window::ProcessMessages()
+{
+	MSG msg;
+
+	while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+	{
+		if (msg.message == WM_QUIT)
+			return msg.wParam;
+
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+
+	return {};
+}
+
 Window::Window(size_t widht, size_t height, const char* wndName)
 	: _width{ widht }, _height{ height }
 {
