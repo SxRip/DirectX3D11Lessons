@@ -13,5 +13,7 @@ int App::run()
 
 void App::DoFrame()
 {
-
+	const float c = sin(_timer.peek() / 2);
+	_window.gfx().clearWindow(rn.get_double(), rn.get_double(), rn.get_double());
+	_window.gfx().EndFrame();
 }

@@ -154,7 +154,7 @@ std::optional<int> Window::ProcessMessages()
 }
 
 Window::Window(size_t widht, size_t height, const char* wndName)
-	: _width{ widht }, _height{ height }
+	: _width{ widht }, _height{ height }, pGFX{}
 {
 	RECT rc{ 0,0, widht, height };
 
@@ -164,7 +164,7 @@ Window::Window(size_t widht, size_t height, const char* wndName)
 	int centerX = (GetSystemMetrics(SM_CXSCREEN) - rc.right) / 2;
 	int centerY = (GetSystemMetrics(SM_CYSCREEN) - rc.bottom) / 2;
 
-	_hwnd = CreateWindowEx(WS_EX_TOPMOST, _wndClass.GetWndClass(), wndName, WS_OVERLAPPEDWINDOW,
+	_hwnd = CreateWindowEx(0, _wndClass.GetWndClass(), wndName, WS_OVERLAPPEDWINDOW,
 		centerX, centerY, rc.right - rc.left, rc.bottom - rc.top, nullptr,
 		nullptr, _wndClass.GetHinstance(), this);
 
@@ -173,6 +173,8 @@ Window::Window(size_t widht, size_t height, const char* wndName)
 
 	ShowWindow(_hwnd, SW_SHOWDEFAULT);
 	UpdateWindow(_hwnd);
+
+	pGFX = std::make_unique<Graphics>(_hwnd);
 }
 
 Window::~Window()

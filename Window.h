@@ -5,7 +5,9 @@
 #include "resource.h"
 #include "Keyboard.h"
 #include "Mouse.h"
+#include "Graphics.hpp"
 #include <optional>
+#include <memory>
 
 class Window
 {
@@ -28,7 +30,7 @@ class Window
 	static LRESULT CALLBACK HandleMessageSetup(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	static LRESULT CALLBACK HandleMessageThunk(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-	
+
 
 public:
 
@@ -58,7 +60,12 @@ public:
 
 	Keyboard keyboard;
 	Mouse mouse;
+
+	inline Graphics& gfx() const noexcept { return *pGFX; }
+
 private:
+	std::unique_ptr<Graphics> pGFX;
+
 	size_t _width, _height;
 	HWND _hwnd;
 	WindowClass _wndClass;
