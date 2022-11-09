@@ -11,6 +11,9 @@ public:
 		: _file{ file }, _line{ line }, _hr{ hr }
 	{}
 
+	BaseException(const BaseException&) = delete;
+	BaseException operator=(const BaseException&&) = delete;
+
 	inline virtual const char* get_type() const noexcept { return "Base Exception"; }
 
 protected:

@@ -30,6 +30,9 @@
     <ClCompile Include="App.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="dxerr.cpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h">
@@ -56,6 +59,9 @@
     <ClInclude Include="random.hpp">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="dxerr.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowLessons1.rc">
@@ -66,5 +72,16 @@
     <Image Include="..\..\..\Downloads\core-6-512.ico">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DXGetErrorDescription.inl">
+      <Filter>Файлы заголовков</Filter>
+    </None>
+    <None Include="DXGetErrorString.inl">
+      <Filter>Файлы заголовков</Filter>
+    </None>
+    <None Include="DXTrace.inl">
+      <Filter>Файлы заголовков</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -153,6 +153,13 @@ std::optional<int> Window::ProcessMessages()
 	return {};
 }
 
+Graphics& Window::gfx() const
+{
+	if (!pGFX)
+		throw NOGFX_EXCEPT();
+	return *pGFX;
+}
+
 Window::Window(size_t widht, size_t height, const char* wndName)
 	: _width{ widht }, _height{ height }, pGFX{}
 {
@@ -216,4 +223,15 @@ std::string Window::WindowException::_get_error_msg() const noexcept
 	LocalFree(pErrorMsg);
 
 	return error;
+}
+
+inline const char* Window::NoGfxException::what() const noexcept
+{
+	std::stringstream ss;
+	ss << "[FILE] " << _file << std::endl
+		<< "[LINE] " << _line << std::endl
+		<< "[DESCRIPTION] " << "D3D graphics object wasn't created!";
+
+	_error = ss.str();
+	return _error.c_str();
 }

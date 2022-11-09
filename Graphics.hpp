@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseException.hpp"
+#include "dxerr.h"
 #include <d3d11.h>
 
 #pragma comment(lib, "d3d11.lib")
