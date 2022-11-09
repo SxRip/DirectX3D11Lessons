@@ -1,5 +1,5 @@
 #pragma once
-#include "Window.h"
+#include "BaseException.hpp"
 #include <d3d11.h>
 
 #pragma comment(lib, "d3d11.lib")
@@ -12,33 +12,23 @@ public:
 		DXGI_SWAP_CHAIN_DESC sd{ sizeof(sd) };
 
 		sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-		sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+		sd.BufferDesc.Scaling = DXGI_MODE_SCALING::DXGI_MODE_SCALING_UNSPECIFIED;
 		sd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER::DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 		sd.SampleDesc.Count = 1;
 		sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		sd.BufferCount = 1;
 		sd.OutputWindow = hwnd;
 		sd.Windowed = true;
-		sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
 		HRESULT ok = D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr,
 			0, nullptr, 0, D3D11_SDK_VERSION, &sd, &pSwapChain, &pDevice, nullptr, &pCTX);
 
-		if (ok != S_OK)
+		if (ok != S_OK || !pSwapChain || !pDevice || !pCTX)
 			throw "D3D initialization error";
-
-		ID3D11Resource* pBuffer = nullptr;
-		pSwapChain->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&pBuffer));
-
-		if (!pBuffer)
-			throw "D3D getting buffer error";
-
-		pDevice->CreateRenderTargetView(pBuffer, nullptr, &pTarget);
-
+		
+		pTarget = _Create_render_target(pSwapChain);
 		if (!pTarget)
-			throw "D3D creating render target error";
-
-		_SafeRelease(pBuffer);
+			throw "D3D initalization render target error";
 	}
 
 	Graphics(const Graphics&) = delete;
@@ -71,6 +61,24 @@ private:
 	IDXGISwapChain* pSwapChain;
 	ID3D11RenderTargetView* pTarget;
 
+	ID3D11RenderTargetView* _Create_render_target(IDXGISwapChain* _Swap_chain) noexcept
+	{
+		ID3D11Resource* pBackBuffer = nullptr;
+		HRESULT ok = _Swap_chain->GetBuffer(DXGI_SWAP_EFFECT_DISCARD,
+			__uuidof(ID3D11Resource), reinterpret_cast<void**>(&pBackBuffer));
+		
+		if (ok != S_OK || !pBackBuffer)
+			return nullptr;
+
+		ID3D11RenderTargetView* pRenderTarget = nullptr;
+		ok = pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pRenderTarget);
+
+		if (ok != S_OK || !pRenderTarget)
+			return nullptr;
+
+		_SafeRelease(pBackBuffer);
+		return pRenderTarget;
+	}
 
 	template <class _Interf>
 	void _SafeRelease(_Interf& _Obj) const noexcept
