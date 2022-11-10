@@ -202,13 +202,13 @@ const char* Window::WindowException::what() const noexcept
 	ss << "[ERROR CODE] " << _hr << std::endl
 		<< "[FILE] " << _file << std::endl
 		<< "[LINE] " << _line << std::endl
-		<< std::endl << _get_error_msg() << std::endl;
+		<< std::endl << get_error_msg() << std::endl;
 
 	_error = ss.str();
 	return _error.c_str();
 }
 
-std::string Window::WindowException::_get_error_msg() const noexcept
+std::string Window::WindowException::get_error_msg() const noexcept
 {
 	char* pErrorMsg = nullptr;
 

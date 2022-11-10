@@ -12,8 +12,8 @@ public:
 
 private:
 	void DoFrame();
-	Window _window;
-	_Simple_timer _timer;
-	random rn;
+	Window			_window;
+	_Simple_timer	_timer;
+	random			rn;
 };
 

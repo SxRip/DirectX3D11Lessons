@@ -17,11 +17,12 @@ class Window
 		WindowClass();
 		~WindowClass();
 
-		WindowClass(const WindowClass&) noexcept = delete;
-		WindowClass operator=(const WindowClass&) noexcept = delete;
+		WindowClass(const WindowClass&)				noexcept = delete;
+		WindowClass operator=(const WindowClass&)	noexcept = delete;
 
-		inline const char* GetWndClass() const noexcept { return wndClassName; }
-		inline HINSTANCE GetHinstance() const noexcept { return hInst; };
+		inline const char*	GetWndClass()	const noexcept { return wndClassName; }
+		inline HINSTANCE	GetHinstance()	const noexcept { return hInst; };
+
 	private:
 		const char* wndClassName = "D3D Love";
 		HINSTANCE hInst;
@@ -41,11 +42,10 @@ public:
 			: BaseException(file, line, hr)
 		{}
 
-		virtual const char* what() const noexcept;
-		virtual const char* get_type() const noexcept { return "[Window exception]"; }
+		virtual const char*			what()				const noexcept;
+		virtual const char*			get_type()			const noexcept { return "[Window exception]"; }
 
-	private:
-		std::string _get_error_msg() const noexcept;
+		std::string					get_error_msg()	const noexcept;
 	};
 
 	class NoGfxException : public BaseException
@@ -54,14 +54,15 @@ public:
 		NoGfxException(const char* file, size_t line, HRESULT hr)
 			: BaseException(file, line, hr)
 		{}
-		inline virtual const char* what() const noexcept;
-		inline virtual const char* get_type() const noexcept { return "[Graphics object isn't initialized]"; }
+
+		inline virtual const char* what()		const noexcept;
+		inline virtual const char* get_type()	const noexcept { return "[Graphics object isn't initialized]"; }
 	};
 
 	Window(size_t widht, size_t height, const char* wndName);
 	~Window();
 
-	Window(const Window&) noexcept = delete;
+	Window(const Window&)			noexcept = delete;
 	Window operator=(const Window&) noexcept = delete;
 
 	void set_title(const char* title) const noexcept;
@@ -80,6 +81,6 @@ private:
 	WindowClass _wndClass;
 };
 
-#define WINEX_LAST_ERROR() Window::WindowException(__FILE__, __LINE__, GetLastError())
-#define WINEX_ERROR(hr) Window::WindowException(__FILE__, __LINE__, hr)
-#define NOGFX_EXCEPT() Window::NoGfxException(__FILE__, __LINE__, 0)
+#define WINEX_LAST_ERROR()	Window::WindowException(__FILE__, __LINE__, GetLastError())
+#define WINEX_ERROR(hr)		Window::WindowException(__FILE__, __LINE__, hr)
+#define NOGFX_EXCEPT()		Window::NoGfxException(__FILE__, __LINE__, 0)
