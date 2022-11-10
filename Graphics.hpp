@@ -29,6 +29,7 @@ public:
 			BaseException(file, line, hr)
 		{}
 
+		inline virtual const char* what() const noexcept override;
 		inline virtual const char* get_type() const noexcept override { return "[Removed device exception]"; }
 	};
 

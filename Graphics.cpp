@@ -21,8 +21,6 @@ Graphics::Graphics(HWND hwnd) : pDevice{}, pCTX{}, pSwapChain{}, pTarget{}
 		0, nullptr, 0, D3D11_SDK_VERSION, &sd, &pSwapChain, &pDevice, nullptr, &pCTX));
 
 	pTarget = _Create_render_target(pSwapChain);
-	if (!pTarget)
-		throw "D3D initalization render target error";
 }
 
 void Graphics::EndFrame()
@@ -69,4 +67,15 @@ inline std::string Graphics::GFXException::get_error_description() const noexcep
 	char cBuff[512]{};
 	DXGetErrorDescription(_hr, cBuff, sizeof(cBuff));
 	return cBuff;
+}
+
+inline const char* Graphics::RemovedDeviceEx::what() const noexcept
+{
+	std::stringstream ss;
+	ss << "[FILE] " << _file << std::endl
+		<< "[LINE] " << _line << std::endl
+		<< "[CODE] " << _hr << std::endl;
+
+	_error = ss.str();
+	return _error.c_str();
 }
