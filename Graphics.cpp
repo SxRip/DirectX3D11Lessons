@@ -51,6 +51,8 @@ inline const char* Graphics::GFXException::what() const noexcept
 	std::stringstream ss;
 	ss << "[FILE] " << _file << std::endl
 		<< "[LINE] " << _line << std::endl
+		<< "[ERROR CODE] " << "0x" << std::hex << std::uppercase << _hr
+		<< std::dec << " ( " << static_cast<size_t>(_hr) << " ) " << std::endl
 		<< "[DX ERROR STRING] " << get_error_string() << std::endl
 		<< "[DX ERROR DESCRIPTION] " << get_error_description() << std::endl;
 	_error = ss.str();
