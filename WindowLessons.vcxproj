@@ -160,8 +160,10 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="dxerr.cpp" />
+    <ClCompile Include="DXGIInfoManager.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="DllInterface.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -169,8 +171,10 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="dxerr.h" />
+    <ClInclude Include="DXGIInfoManager.hpp" />
     <ClInclude Include="Graphics.hpp" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="DllInterface.hpp" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="random.hpp" />
     <ClInclude Include="resource.h" />

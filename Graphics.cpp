@@ -18,7 +18,7 @@ Graphics::Graphics(HWND hwnd) : pDevice{}, pCTX{}, pSwapChain{}, pTarget{}
 	sd.Windowed = true;
 
 	GFX_THROW_FAILED(D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr,
-		0, nullptr, 0, D3D11_SDK_VERSION, &sd, &pSwapChain, &pDevice, nullptr, &pCTX));
+		D3D11_CREATE_DEVICE_DEBUG, nullptr, 0, D3D11_SDK_VERSION, &sd, &pSwapChain, &pDevice, nullptr, &pCTX));
 
 	pTarget = _Create_render_target(pSwapChain);
 }
@@ -42,7 +42,7 @@ ID3D11RenderTargetView* Graphics::_Create_render_target(IDXGISwapChain* _Swap_ch
 	ID3D11RenderTargetView* pRenderTarget = nullptr;
 	GFX_THROW_FAILED(pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pRenderTarget));
 
-	_SafeRelease(pBackBuffer);
+	SafeRelease(pBackBuffer);
 	return pRenderTarget;
 }
 

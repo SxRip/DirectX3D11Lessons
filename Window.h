@@ -25,7 +25,7 @@ class Window
 
 	private:
 		const char* wndClassName = "D3D Love";
-		HINSTANCE hInst;
+		HINSTANCE	hInst;
 	};
 
 	static LRESULT CALLBACK HandleMessageSetup(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;

@@ -10,10 +10,6 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PCHAR Args, int
 	{
 		MessageBox(nullptr, ex.what(), ex.get_type(), MB_ICONERROR);
 	}
-	catch (const char* msg)
-	{
-		MessageBox(nullptr, msg, nullptr, MB_ICONERROR);
-	}
 	catch (...)
 	{
 		MessageBox(nullptr, "Something wrong", nullptr, MB_ICONERROR);

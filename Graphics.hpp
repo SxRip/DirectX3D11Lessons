@@ -5,6 +5,17 @@
 
 #pragma comment(lib, "d3d11.lib")
 
+template <class _DirectXInterf>
+void SafeRelease(_DirectXInterf& _Obj)
+{
+	if (_Obj)
+	{
+		_Obj->Release();
+
+		_Obj = nullptr;
+	}
+}
+
 class Graphics
 {
 public:
@@ -29,8 +40,8 @@ public:
 			BaseException(file, line, hr)
 		{}
 
-		inline virtual const char* what() const noexcept override;
-		inline virtual const char* get_type() const noexcept override { return "[Removed device exception]"; }
+		inline virtual const char* what()					const noexcept override;
+		inline virtual const char* get_type()				const noexcept override { return "[Removed device exception]"; }
 	};
 
 	Graphics(HWND hwnd);
@@ -41,10 +52,10 @@ public:
 
 	~Graphics()
 	{
-		_SafeRelease(pDevice);
-		_SafeRelease(pCTX);
-		_SafeRelease(pSwapChain);
-		_SafeRelease(pTarget);
+		SafeRelease(pDevice);
+		SafeRelease(pCTX);
+		SafeRelease(pSwapChain);
+		SafeRelease(pTarget);
 	}
 
 	void clearWindow(float r, float g, float b, float a = 0) noexcept
@@ -63,15 +74,4 @@ private:
 	ID3D11RenderTargetView* pTarget;
 
 	ID3D11RenderTargetView* _Create_render_target(IDXGISwapChain* _Swap_chain);
-
-	template <class _Interf>
-	void _SafeRelease(_Interf& _Obj) const noexcept
-	{
-		if (_Obj)
-		{
-			_Obj->Release();
-
-			_Obj = nullptr;
-		}
-	}
 };
