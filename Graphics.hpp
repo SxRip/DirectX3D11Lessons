@@ -3,6 +3,7 @@
 #include "dxerr.h"
 #include "DXGIInfoManager.hpp"
 #include <d3d11.h>
+#include <wrl.h>
 
 #pragma comment(lib, "d3d11.lib")
 
@@ -70,24 +71,16 @@ public:
 	};
 
 	Graphics(HWND hwnd);
+	~Graphics() = default;
 
 	Graphics(const Graphics&) = delete;
 	Graphics& operator=(const Graphics&) = delete;
-
-
-	~Graphics()
-	{
-		SafeRelease(pDevice);
-		SafeRelease(pCTX);
-		SafeRelease(pSwapChain);
-		SafeRelease(pTarget);
-	}
 
 	void clearWindow(float r, float g, float b, float a = 0) noexcept
 	{
 		const FLOAT color[4] = { r, g, b, a };
 
-		pCTX->ClearRenderTargetView(pTarget, color);
+		pCTX->ClearRenderTargetView(pTarget.Get(), color);
 	}
 
 	void EndFrame();
@@ -98,10 +91,8 @@ private:
 #endif // DEBUG
 
 
-	ID3D11Device* pDevice;
-	ID3D11DeviceContext* pCTX;
-	IDXGISwapChain* pSwapChain;
-	ID3D11RenderTargetView* pTarget;
-
-	ID3D11RenderTargetView* _Create_render_target(IDXGISwapChain* _Swap_chain);
+	Microsoft::WRL::ComPtr<ID3D11Device> pDevice;
+	Microsoft::WRL::ComPtr <ID3D11DeviceContext> pCTX;
+	Microsoft::WRL::ComPtr <IDXGISwapChain> pSwapChain;
+	Microsoft::WRL::ComPtr <ID3D11RenderTargetView> pTarget;
 };

@@ -40,7 +40,11 @@ Graphics::Graphics(HWND hwnd) : pDevice{}, pCTX{}, pSwapChain{}, pTarget{}
 	GFX_THROW_INFO(D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr,
 		swapCreateFlags, nullptr, 0, D3D11_SDK_VERSION, &sd, &pSwapChain, &pDevice, nullptr, &pCTX));
 
-	pTarget = _Create_render_target(pSwapChain);
+	Microsoft::WRL::ComPtr<ID3D11Resource> pBackBuffer = nullptr;
+	GFX_THROW_INFO(pSwapChain->GetBuffer(DXGI_SWAP_EFFECT_DISCARD,
+		__uuidof(ID3D11Resource), &pBackBuffer));
+
+	GFX_THROW_INFO(pDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, &pTarget));
 }
 
 void Graphics::EndFrame()
@@ -56,19 +60,6 @@ void Graphics::EndFrame()
 			throw GFX_DEVICE_REMOVED_EXCEPT(pDevice->GetDeviceRemovedReason());
 		else
 			throw GFX_EXCEPT(hr);
-}
-
-ID3D11RenderTargetView* Graphics::_Create_render_target(IDXGISwapChain* _Swap_chain)
-{
-	ID3D11Resource* pBackBuffer = nullptr;
-	GFX_THROW_INFO(pSwapChain->GetBuffer(DXGI_SWAP_EFFECT_DISCARD,
-		__uuidof(ID3D11Resource), reinterpret_cast<void**>(&pBackBuffer)));
-
-	ID3D11RenderTargetView* pRenderTarget = nullptr;
-	GFX_THROW_INFO(pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pRenderTarget));
-
-	SafeRelease(pBackBuffer);
-	return pRenderTarget;
 }
 
 inline const char* Graphics::GFXException::what() const noexcept
