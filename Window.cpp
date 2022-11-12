@@ -189,7 +189,7 @@ Window::~Window()
 	DestroyWindow(_hwnd);
 }
 
-void Window::set_title(const char* title) const noexcept
+void Window::set_title(const char* title) const
 {
 	if (!SetWindowText(_hwnd, title))
 		throw WINEX_LAST_ERROR();

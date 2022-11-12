@@ -65,7 +65,7 @@ public:
 	Window(const Window&)			noexcept = delete;
 	Window operator=(const Window&) noexcept = delete;
 
-	void set_title(const char* title) const noexcept;
+	void set_title(const char* title) const;
 	std::optional<int> ProcessMessages();
 
 	Keyboard keyboard;

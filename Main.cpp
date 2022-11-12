@@ -14,4 +14,5 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PCHAR Args, int
 	{
 		MessageBox(nullptr, "Something wrong", nullptr, MB_ICONERROR);
 	}
+	return -1;
 }

@@ -1,8 +1,23 @@
 #include "Graphics.hpp"
 
 HRESULT _Hr_return_code;
-#define GFX_THROW_FAILED(returnHrFunc) if(FAILED(_Hr_return_code = returnHrFunc)){throw Graphics::GFXException(__FILE__, __LINE__, _Hr_return_code);}
-#define GFX_DEVICE_REMOVED(hr) Graphics::RemovedDeviceEx(__FILE__, __LINE__, hr)
+#define GFX_EXPECT_NOINFO(hr) Graphics::GFXException(__FILE__, __LINE__, hr);
+//#define GFX_DEVICE_REMOVED(hr) Graphics::RemovedDeviceEx(__FILE__, __LINE__, hr)
+//#define GFX_EXCEPT_NOINFO(returnHrCall) Graphics::GFXException(__FILE__, __LINE__, _DXGI.GetMessages())
+#define GFX_THROW_NOINFO(returnHrCall) if(FAILED(_Hr_return_code = (returnHrCall))) throw Graphics::GFXException(__FILE__, __LINE__, _Hr_return_code)
+
+#ifdef _DEBUG
+#define GFX_EXCEPT(hr) Graphics::GFXException(__FILE__, __LINE__, hr, _DXGIInfo.GetMessages());
+#define GFX_THROW_INFO(returnHrFunc) _DXGIInfo.SetMessageNum(); if(FAILED(_Hr_return_code = returnHrFunc)) throw Graphics::GFXException(__FILE__, __LINE__, _Hr_return_code, _DXGIInfo.GetMessages())
+#define GFX_DEVICE_REMOVED_EXCEPT(hr) Graphics::RemovedDeviceEx(__FILE__, __LINE__, hr, _DXGIInfo.GetMessages())
+
+#else
+
+#define GFX_EXCEPT(hr) Graphics::GFXException(__FILE__, __LINE__, hr)
+#define GFX_THROW_INFO(returnHrFunc) GFX_THROW_NOINFO(returnHrFunc)
+#define GFX_DEVICE_REMOVED_EXCEPT(hr) Graphics::RemovedDeviceEx(__FILE__, __LINE__, hr)
+#endif
+
 
 Graphics::Graphics(HWND hwnd) : pDevice{}, pCTX{}, pSwapChain{}, pTarget{}
 {
@@ -16,9 +31,14 @@ Graphics::Graphics(HWND hwnd) : pDevice{}, pCTX{}, pSwapChain{}, pTarget{}
 	sd.BufferCount = 1;
 	sd.OutputWindow = hwnd;
 	sd.Windowed = true;
+	UINT swapCreateFlags = 0;
 
-	GFX_THROW_FAILED(D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr,
-		D3D11_CREATE_DEVICE_DEBUG, nullptr, 0, D3D11_SDK_VERSION, &sd, &pSwapChain, &pDevice, nullptr, &pCTX));
+#ifdef _DEBUG
+	swapCreateFlags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif // _DEBUG
+
+	GFX_THROW_INFO(D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE, nullptr,
+		swapCreateFlags, nullptr, 0, D3D11_SDK_VERSION, &sd, &pSwapChain, &pDevice, nullptr, &pCTX));
 
 	pTarget = _Create_render_target(pSwapChain);
 }
@@ -26,21 +46,26 @@ Graphics::Graphics(HWND hwnd) : pDevice{}, pCTX{}, pSwapChain{}, pTarget{}
 void Graphics::EndFrame()
 {
 	HRESULT hr;
+
+#ifdef _DEBUG
+	_DXGIInfo.SetMessageNum();
+#endif // _DEBUG
+
 	if (FAILED(hr = pSwapChain->Present(2, 0)))
 		if (hr == ERROR_DEVICE_REMOVED)
-			throw GFX_DEVICE_REMOVED(pDevice->GetDeviceRemovedReason());
+			throw GFX_DEVICE_REMOVED_EXCEPT(pDevice->GetDeviceRemovedReason());
 		else
-			GFX_THROW_FAILED(hr);
+			throw GFX_EXCEPT(hr);
 }
 
 ID3D11RenderTargetView* Graphics::_Create_render_target(IDXGISwapChain* _Swap_chain)
 {
 	ID3D11Resource* pBackBuffer = nullptr;
-	GFX_THROW_FAILED(pSwapChain->GetBuffer(DXGI_SWAP_EFFECT_DISCARD,
+	GFX_THROW_INFO(pSwapChain->GetBuffer(DXGI_SWAP_EFFECT_DISCARD,
 		__uuidof(ID3D11Resource), reinterpret_cast<void**>(&pBackBuffer)));
 
 	ID3D11RenderTargetView* pRenderTarget = nullptr;
-	GFX_THROW_FAILED(pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pRenderTarget));
+	GFX_THROW_INFO(pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pRenderTarget));
 
 	SafeRelease(pBackBuffer);
 	return pRenderTarget;
@@ -55,6 +80,10 @@ inline const char* Graphics::GFXException::what() const noexcept
 		<< std::dec << " ( " << static_cast<size_t>(_hr) << " ) " << std::endl
 		<< "[DX ERROR STRING] " << get_error_string() << std::endl
 		<< "[DX ERROR DESCRIPTION] " << get_error_description() << std::endl;
+
+	if (!_info.empty())
+		ss << "\n[ERROR INFO]\n" << _info << std::endl;
+
 	_error = ss.str();
 	return _error.c_str();
 }
