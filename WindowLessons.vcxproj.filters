@@ -13,69 +13,87 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Исходные файлы\Keyboard">
+      <UniqueIdentifier>{9dc50bd6-69c9-459a-b82e-cc1160d23c16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Mouse">
+      <UniqueIdentifier>{8e3c4ea2-2ce8-4eec-a2cd-bb30591b1ba2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Graphics">
+      <UniqueIdentifier>{20eb5290-0f13-4b99-b00f-59035a1387ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\DXErrors">
+      <UniqueIdentifier>{83cdd72a-99cd-4ffd-b852-e153f7c6570c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Exceptions">
+      <UniqueIdentifier>{d9449c59-615d-45ff-85eb-ceca1a7a8089}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Window">
+      <UniqueIdentifier>{8f8191ad-4e27-4553-8551-8ac3f734c9e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Keyboard.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Mouse.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="App.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="dxerr.cpp">
+    <ClCompile Include="Main.cpp">
       <Filter>Файлы заголовков</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="DXGIInfoManager.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="DllInterface.cpp">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Файлы ресурсов</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard\Keyboard.cpp">
+      <Filter>Исходные файлы\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse\Mouse.cpp">
+      <Filter>Исходные файлы\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Graphics.cpp">
+      <Filter>Исходные файлы\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Window\Window.cpp">
+      <Filter>Исходные файлы\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="DXErrors\dxerr.cpp">
+      <Filter>Файлы заголовков\DXErrors</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\DXGIInfoManager.cpp">
+      <Filter>Файлы заголовков\Exceptions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Window.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseException.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Keyboard.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Mouse.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="App.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="random.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="dxerr.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="DXGIInfoManager.hpp">
-      <Filter>Файлы заголовков</Filter>
+    <ClInclude Include="resource.h">
+      <Filter>Файлы ресурсов</Filter>
     </ClInclude>
     <ClInclude Include="DllInterface.hpp">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы ресурсов</Filter>
+    </ClInclude>
+    <ClInclude Include="random.hpp">
+      <Filter>Файлы ресурсов</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard\Keyboard.h">
+      <Filter>Исходные файлы\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse\Mouse.h">
+      <Filter>Исходные файлы\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Graphics.hpp">
+      <Filter>Исходные файлы\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Window\Window.h">
+      <Filter>Исходные файлы\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="DXErrors\dxerr.h">
+      <Filter>Файлы заголовков\DXErrors</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\BaseException.hpp">
+      <Filter>Файлы заголовков\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\DXGIInfoManager.hpp">
+      <Filter>Файлы заголовков\Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -89,14 +107,14 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="DXGetErrorDescription.inl">
-      <Filter>Файлы заголовков</Filter>
+    <None Include="DXErrors\DXGetErrorDescription.inl">
+      <Filter>Файлы заголовков\DXErrors</Filter>
     </None>
-    <None Include="DXGetErrorString.inl">
-      <Filter>Файлы заголовков</Filter>
+    <None Include="DXErrors\DXGetErrorString.inl">
+      <Filter>Файлы заголовков\DXErrors</Filter>
     </None>
-    <None Include="DXTrace.inl">
-      <Filter>Файлы заголовков</Filter>
+    <None Include="DXErrors\DXTrace.inl">
+      <Filter>Файлы заголовков\DXErrors</Filter>
     </None>
   </ItemGroup>
 </Project>

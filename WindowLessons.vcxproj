@@ -159,27 +159,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="dxerr.cpp" />
-    <ClCompile Include="DXGIInfoManager.cpp" />
-    <ClCompile Include="Graphics.cpp" />
-    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="DllInterface.cpp" />
-    <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="DXErrors\dxerr.cpp" />
+    <ClCompile Include="Exceptions\DXGIInfoManager.cpp" />
+    <ClCompile Include="Graphics\Graphics.cpp" />
+    <ClCompile Include="Keyboard\Keyboard.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Mouse\Mouse.cpp" />
+    <ClCompile Include="Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
-    <ClInclude Include="dxerr.h" />
-    <ClInclude Include="DXGIInfoManager.hpp" />
-    <ClInclude Include="Graphics.hpp" />
-    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="DllInterface.hpp" />
-    <ClInclude Include="Mouse.h" />
+    <ClInclude Include="DXErrors\dxerr.h" />
+    <ClInclude Include="Exceptions\BaseException.hpp" />
+    <ClInclude Include="Exceptions\DXGIInfoManager.hpp" />
+    <ClInclude Include="Graphics\Graphics.hpp" />
+    <ClInclude Include="Keyboard\Keyboard.h" />
+    <ClInclude Include="Mouse\Mouse.h" />
     <ClInclude Include="random.hpp" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Window.h" />
-    <ClInclude Include="BaseException.hpp" />
+    <ClInclude Include="Window\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowLessons1.rc" />
@@ -188,9 +188,9 @@
     <Image Include="..\..\..\Downloads\core-6-512.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DXGetErrorDescription.inl" />
-    <None Include="DXGetErrorString.inl" />
-    <None Include="DXTrace.inl" />
+    <None Include="DXErrors\DXGetErrorDescription.inl" />
+    <None Include="DXErrors\DXGetErrorString.inl" />
+    <None Include="DXErrors\DXTrace.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

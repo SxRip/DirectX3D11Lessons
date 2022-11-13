@@ -1,6 +1,6 @@
 #pragma once
 #include "random.hpp"
-#include "Window.h"
+#include "Window/Window.h"
 #include "timer.hpp"
 
 class App
