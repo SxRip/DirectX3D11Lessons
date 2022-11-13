@@ -9,13 +9,13 @@ HRESULT _Hr_return_code;
 #define GFX_EXCEPT(hr) Graphics::GFXException(__FILE__, __LINE__, hr, _DXGIInfo.GetMessages());
 #define GFX_THROW_INFO(returnHrFunc) _DXGIInfo.SetMessageNum(); if(FAILED(_Hr_return_code = returnHrFunc)) throw Graphics::GFXException(__FILE__, __LINE__, _Hr_return_code, _DXGIInfo.GetMessages())
 #define GFX_DEVICE_REMOVED_EXCEPT(hr) Graphics::RemovedDeviceEx(__FILE__, __LINE__, hr, _DXGIInfo.GetMessages())
-#define GFX_THOW_VOID_INFO(returnHrFunc) _DXGIInfo.SetMessageNum(); (returnHrFunc); std::vector<std::string> msgs = _DXGIInfo.GetMessages(); if(!msgs.empty()) throw GFXException(__FILE__, __LINE__, msgs)
+#define GFX_THROW_VOID_INFO(returnHrFunc) _DXGIInfo.SetMessageNum(); (returnHrFunc); std::vector<std::string> msgs = _DXGIInfo.GetMessages(); if(!msgs.empty()) throw GFXException(__FILE__, __LINE__, msgs)
 #else
 
 #define GFX_EXCEPT(hr) Graphics::GFXException(__FILE__, __LINE__, hr)
 #define GFX_THROW_INFO(returnHrFunc) GFX_THROW_NOINFO(returnHrFunc)
 #define GFX_DEVICE_REMOVED_EXCEPT(hr) Graphics::RemovedDeviceEx(__FILE__, __LINE__, hr)
-#define GFX_THOW_VOID_INFO(returnHrFunc) (returnHrFunc)
+#define GFX_THROW_VOID_INFO(returnHrFunc) (returnHrFunc)
 #endif
 
 
@@ -77,7 +77,7 @@ void Graphics::DrawRectangle()
 	GFX_THROW_INFO(pDevice->CreateBuffer(&BufferDesc, &SubResData, &pVertexBuffer));
 
 	pCTX->IASetVertexBuffers(0u, 1u, &pVertexBuffer, &stride, &offsets);
-	GFX_THOW_VOID_INFO(pCTX->Draw(3u, 0u));
+	GFX_THROW_VOID_INFO(pCTX->Draw(3u, 0u));
 }
 
 void Graphics::EndFrame()

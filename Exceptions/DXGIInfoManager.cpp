@@ -18,11 +18,6 @@ DXGIInfoManager::DXGIInfoManager() : pDxgiInfoQueue{}, _Last_message{}
 	GFX_THROW_NOINFO(pfnGetDebugInterface(__uuidof(IDXGIInfoQueue), &pDxgiInfoQueue));
 }
 
-DXGIInfoManager::~DXGIInfoManager()
-{
-	SafeRelease(pDxgiInfoQueue);
-}
-
 std::vector<std::string> DXGIInfoManager::GetMessages() const
 {
 	std::vector<std::string> messages;

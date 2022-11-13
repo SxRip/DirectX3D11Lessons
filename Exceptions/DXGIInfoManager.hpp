@@ -10,7 +10,7 @@ class DXGIInfoManager
 public:
 	DXGIInfoManager();
 
-	~DXGIInfoManager();
+	~DXGIInfoManager() = default;
 
 	std::vector<std::string> GetMessages() const;
 	void SetMessageNum() noexcept;
